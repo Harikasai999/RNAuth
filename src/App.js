@@ -10,12 +10,14 @@ import SignInScreen from './screens/auth/signInScreen';
 import SignUpScreen from './screens/auth/signUpScreen';
 import SplashScreen from './screens/splashScreen';
 import SearchBar from './screens/SearchBar';
+import TabsScreen from './screens/TabsScreen';
 import AppInit from './AppInit';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import { stateConditionString } from './utils/helpers';
 import { AuthContext } from './utils/authContext';
 import { reducer, initialState } from './reducer';
+import { SafeAreaView } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -142,10 +144,14 @@ export default App = ({ navigation }) => {
   };
 
   return (
-    <AuthContext.Provider value={authContextValue}>
-      <NavigationContainer>
-        <Stack.Navigator>{chooseScreen(state)}</Stack.Navigator>
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <AuthContext.Provider value={authContextValue}>
+        <NavigationContainer>
+          {/* <Stack.Navigator>{chooseScreen(state)}</Stack.Navigator> */}
+          <TabsScreen />
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </SafeAreaView>
+
   );
 };
