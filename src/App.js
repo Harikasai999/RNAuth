@@ -51,6 +51,7 @@ export default App = ({ navigation }) => {
 
       try {
         userToken = await AsyncStorage.getItem('userToken');
+
       } catch (e) {
         // Restoring token failed
       }
@@ -58,7 +59,13 @@ export default App = ({ navigation }) => {
       // After restoring token, we may need to validate it in production apps
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
-      dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+      // console.log("userToken", userToken)
+      if (userToken) {
+        dispatch({ type: 'SIGN_IN', token: 'Token-For-Now' });
+      } else {
+        dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+      }
+
     };
     bootstrapAsync();
   }, []);
@@ -74,6 +81,7 @@ export default App = ({ navigation }) => {
           data.emailAddress !== undefined &&
           data.password !== undefined
         ) {
+          AsyncStorage.setItem('userToken', 'Token-For-Now');
           dispatch({ type: 'SIGN_IN', token: 'Token-For-Now' });
         } else {
           dispatch({ type: 'TO_SIGNIN_PAGE' });
@@ -100,6 +108,7 @@ export default App = ({ navigation }) => {
 
   const chooseScreen = (state) => {
     let navigateTo = stateConditionString(state);
+    // console.log("userToken--state---", state)
     let arr = [];
 
     switch (navigateTo) {
@@ -147,8 +156,8 @@ export default App = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <AuthContext.Provider value={authContextValue}>
         <NavigationContainer>
-          {/* <Stack.Navigator>{chooseScreen(state)}</Stack.Navigator> */}
-          <TabsScreen />
+          <Stack.Navigator>{chooseScreen(state)}</Stack.Navigator>
+          {/* <TabsScreen /> */}
         </NavigationContainer>
       </AuthContext.Provider>
     </SafeAreaView>

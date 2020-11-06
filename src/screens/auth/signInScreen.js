@@ -7,7 +7,7 @@ import {
     FormValidationMessage,
     Button
 } from 'react-native-elements';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import { AuthContext } from '../../utils/authContext';
 
 const SignInScreen = ({ navigation }) => {
@@ -38,7 +38,8 @@ const SignInScreen = ({ navigation }) => {
 
         validateAll(data, rules, messages)
             .then(() => {
-                console.log('success sign in');
+                // console.log('success sign in');
+                AsyncStorage.setItem('userToken', "dummy-auth-token");
                 signIn({ emailAddress, password });
             })
             .catch(err => {

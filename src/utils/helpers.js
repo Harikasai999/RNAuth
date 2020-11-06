@@ -1,4 +1,5 @@
 export const stateConditionString = state => {
+    // console.log(state.isSignedIn, "==helpwsssss=")
     let navigateTo = '';
     if (state.isLoading) {
         navigateTo = 'LOAD_APP';

@@ -58,3 +58,14 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Android
+.idea
+.gradle
+local.properties
+*.iml
+
+
+
+# Android memory profiler files
+*.hprof
